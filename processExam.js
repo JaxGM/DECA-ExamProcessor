@@ -100,7 +100,8 @@ function digitize(rawText) {
 app.get("/url", (req, res, next) => {
     const url = req.query.link;
     if (url == "awake") {
-        console.log("site loaded (wake recived")
+        console.log("site loaded (awake recived)")
+        res.json("Hello wolrd!");
     } else {
         try {
             processExam(url);
