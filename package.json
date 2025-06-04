@@ -1,0 +1,30 @@
+{
+  "name": "deca-examprocessor",
+  "version": "1.0.0",
+  "description": "Converts a URL of a DECA Exam into an array.",
+  "main": "processExam.js",
+  "scripts": {
+    "test": "\"test\": \"echo \\\"Error: no test specified\\\" && exit 1\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JaxGM/DECA-ExamProcessor.git"
+  },
+  "keywords": [
+    "DECA",
+    "pdf",
+    "parser",
+    "exam",
+    "api"
+  ],
+  "author": "Jackson G. Miller",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/JaxGM/DECA-ExamProcessor/issues"
+  },
+  "homepage": "https://github.com/JaxGM/DECA-ExamProcessor#readme",
+  "dependencies": {
+    "axios": "^1.9.0",
+    "pdf-parse": "^1.1.1"
+  }
+}
