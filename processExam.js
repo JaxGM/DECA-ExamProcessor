@@ -5,6 +5,9 @@ app.listen(3000, () => {
  console.log("Server running on port 3000");
 });
 
+const cors = require('cors');
+app.use(cors());
+
 // My Stuff
 const pdf = require('pdf-parse');
 const axios = require("axios");
