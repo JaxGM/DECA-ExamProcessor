@@ -96,6 +96,10 @@ function digitize(rawText) {
 // The API
 app.get("/url", (req, res, next) => {
     const url = req.query.link;
-    processExam(url);
-    res.json(output);
+    if (url == "awake") {
+        console.log("site loaded (wake recived")
+    } else {
+        processExam(url);
+        res.json(output);
+    }
 });
