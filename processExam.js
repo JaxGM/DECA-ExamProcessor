@@ -65,7 +65,13 @@ function digitize(rawText) {
     }
 
     examName = between("EXAM", "THE");
-    //examName = scrub(examName);
+            while (examName.charAt(0) == " ") {
+                examName = examName.slice(1);
+            }
+            while (examName.charAt(examName.length-1) == " ") {
+                examName = examName.substring(0, examName.length-1);
+            }
+            examName=examName.replaceAll("  ", " ")
     data[0][0]= examName;
     console.log(examName);
 
