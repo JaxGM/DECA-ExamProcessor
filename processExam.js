@@ -34,7 +34,7 @@ axios.get(url, { responseType: 'arraybuffer' })
 
 function digitize(rawText) {
     let examName;
-    let data = [[examName, "Text", "A.", "B.", "C.", "D.", "Answer", "Why"]];
+    let data = [[0, "Text", "A.", "B.", "C.", "D.", "Answer", "Why"]];
 
     let begin, d, temp;
 
@@ -64,7 +64,9 @@ function digitize(rawText) {
         }
     }
 
-    examName = between("EXAM", "THE")
+    examName = between("EXAM", "THE");
+    examName = scrub(examName);
+    data[0][0]= examName;
     console.log(examName);
 
     for (let i = 1; i <= 100; i++) {
