@@ -99,7 +99,11 @@ app.get("/url", (req, res, next) => {
     if (url == "awake") {
         console.log("site loaded (wake recived")
     } else {
-        processExam(url);
-        res.json(output);
+        try {
+            processExam(url);
+            res.json(output);
+        } catch (error) {
+            res.json("error");
+        }
     }
 });
