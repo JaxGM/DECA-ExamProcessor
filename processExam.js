@@ -81,7 +81,7 @@ function digitize(rawText) {
         begin = rawText.indexOf(" "+i+".", begin)
         begin = rawText.indexOf(".", begin) + 1
 
-        data[i].push(rawText.substring(begin, begin + 3));
+        data[i].push(rawText.substring(begin, begin + 2));
         data[i].push(betweenS(" ","SOURCE", begin+2));
 
         scrub(data[i]);
