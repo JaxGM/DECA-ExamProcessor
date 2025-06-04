@@ -34,7 +34,7 @@ axios.get(url, { responseType: 'arraybuffer' })
 
 function digitize(rawText) {
     let examName;
-    let data = [[0, "Text", "A.", "B.", "C.", "D.", "Answer", "Why"]];
+    let data = [[examName, "Text", "A.", "B.", "C.", "D.", "Answer", "Why"]];
 
     let begin, d, temp;
 
