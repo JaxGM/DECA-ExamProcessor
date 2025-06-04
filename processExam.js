@@ -65,7 +65,7 @@ function digitize(rawText) {
     }
 
     examName = between("EXAM", "THE");
-    examName = scrub(examName);
+    //examName = scrub(examName);
     data[0][0]= examName;
     console.log(examName);
 
