@@ -84,8 +84,8 @@ app.get("/url", (req, res, next) => {
             data[i].push(betweenS(" ","SOURCE", begin+2));
 
             scrub(data[i]);
-            
-            data[i].push(false, "");
+
+            //data[i].push(false, "");
         }
 
         // console.log(data);
