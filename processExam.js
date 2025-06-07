@@ -71,9 +71,9 @@ app.get("/url", (req, res, next) => {
             }
 
             if (i != 100) {
-                data[i] = [i, between(" "+i+". ", " A.", begin), betweenS(" A.", " B.", begin), betweenS(" B.", " C.", begin), betweenS(" C.", " D.", begin), false, ""];
+                data[i] = [i, between(" "+i+". ", " A.", begin), betweenS(" A.", " B.", begin), betweenS(" B.", " C.", begin), betweenS(" C.", " D.", begin)];
             } else {
-                data[i] = [i, between(" "+i+". ", " A.", begin), betweenS(" A.", " B.", begin), betweenS(" B.", " C.", begin), betweenS(" C.", " D.", begin), betweenS(" D.", "Test", begin), false, ""];
+                data[i] = [i, between(" "+i+". ", " A.", begin), betweenS(" A.", " B.", begin), betweenS(" B.", " C.", begin), betweenS(" C.", " D.", begin), betweenS(" D.", "Test", begin)];
             }
             
             begin = rawText.indexOf("EXAM—KEY")
@@ -84,6 +84,8 @@ app.get("/url", (req, res, next) => {
             data[i].push(betweenS(" ","SOURCE", begin+2));
 
             scrub(data[i]);
+            
+            data[i].push(false, "");
         }
 
         // console.log(data);
