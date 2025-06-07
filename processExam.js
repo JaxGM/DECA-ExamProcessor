@@ -19,7 +19,7 @@ app.get("/url", (req, res, next) => {
     //const url = "https://cdn.prod.website-files.com/635c470cc81318fc3e9c1e0e/67c1d65441573664321a854f_24-25_BA%20Core%20Exam.pdf"
     function digitize(rawText) {
         let examName;
-        let data = [[0, "Text", "A.", "B.", "C.", "D.", "Answer", "Why"]];
+        let data = [[0, "Text", "A.", "B.", "C.", "D.", "Answer", "Why", "isSelected", "Selected Letter"]];
 
         let begin, d, temp;
 
@@ -71,9 +71,9 @@ app.get("/url", (req, res, next) => {
             }
 
             if (i != 100) {
-                data[i] = [i, between(" "+i+". ", " A.", begin), betweenS(" A.", " B.", begin), betweenS(" B.", " C.", begin), betweenS(" C.", " D.", begin), d];
+                data[i] = [i, between(" "+i+". ", " A.", begin), betweenS(" A.", " B.", begin), betweenS(" B.", " C.", begin), betweenS(" C.", " D.", begin), false, ""];
             } else {
-                data[i] = [i, between(" "+i+". ", " A.", begin), betweenS(" A.", " B.", begin), betweenS(" B.", " C.", begin), betweenS(" C.", " D.", begin), betweenS(" D.", "Test", begin)];
+                data[i] = [i, between(" "+i+". ", " A.", begin), betweenS(" A.", " B.", begin), betweenS(" B.", " C.", begin), betweenS(" C.", " D.", begin), betweenS(" D.", "Test", begin), false, ""];
             }
             
             begin = rawText.indexOf("EXAM—KEY")
