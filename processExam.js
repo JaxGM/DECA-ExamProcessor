@@ -110,8 +110,12 @@ app.get("/url", (req, res, next) => {
 				begin = rawText.indexOf(" " + i + ".", begin);
 				begin = rawText.indexOf(".", begin) + 1;
 
-				data[i].push(rawText.substring(begin, begin + 2));
-				data[i].push(betweenS(" ", "SOURCE", begin + 2));
+				data[i].push(rawText.substring(begin, begin + 4));
+				if(rawText.substring(begin, begin + 4)==""){
+					throw new Error("This is a generic error message.");
+				}
+
+				data[i].push(betweenS(" ", "SOURCE", begin + 4));
 
 				scrub(data[i]);
 
