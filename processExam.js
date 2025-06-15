@@ -52,7 +52,7 @@ app.get("/url", (req, res, next) => {
 			}
 			function scrub(array) {
 				for (let x = 1; x < array.length; x++) {
-					temp = array[x].replaceAll("~", " ");;
+					temp = array[x].replaceAll("~", " ");
 					while (temp.charAt(0) == " ") {
 						temp = temp.slice(1);
 					}
@@ -63,7 +63,7 @@ app.get("/url", (req, res, next) => {
 				}
 			}
 
-			examName = between("EXAM", "THE");
+			examName = between("EXAM", "THE").replaceAll("~", " ");
 			while (examName.charAt(0) == " ") {
 				examName = examName.slice(1);
 			}
