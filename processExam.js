@@ -37,7 +37,8 @@ app.get("/url", (req, res, next) => {
 			let begin, d, temp;
 
 			// console.log(rawText);
-			rawText = rawText.replace(/(\r\n|\n|\r)/gm, " ");
+			rawText = rawText.replace(/(\r\n|\n|\r)/gm, " ~ ");
+			//console.log(rawText);
 
 			function between(startStr, endStr) {
 				pos = rawText.indexOf(startStr) + startStr.length;
@@ -51,7 +52,7 @@ app.get("/url", (req, res, next) => {
 			}
 			function scrub(array) {
 				for (let x = 1; x < array.length; x++) {
-					temp = array[x];
+					temp = array[x].replaceAll("~", " ");;
 					while (temp.charAt(0) == " ") {
 						temp = temp.slice(1);
 					}
@@ -101,7 +102,7 @@ app.get("/url", (req, res, next) => {
 						betweenS(" A.", " B.", begin),
 						betweenS(" B.", " C.", begin),
 						betweenS(" C.", " D.", begin),
-						betweenS(" D.", "Test", begin),
+						betweenS(" D.", "~  ~", begin),
 					];
 				}
 
