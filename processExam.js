@@ -38,7 +38,7 @@ app.get("/url", (req, res, next) => {
 
 			// console.log(rawText);
 			rawText = rawText.replace(/(\r\n|\n|\r)/gm, " ~ ");
-			//console.log(rawText);
+			// console.log(rawText);
 
 			function between(startStr, endStr) {
 				pos = rawText.indexOf(startStr) + startStr.length;
@@ -50,6 +50,23 @@ app.get("/url", (req, res, next) => {
 				rawText.substring(pos, rawText.indexOf(endStr, pos));
 				return rawText.substring(pos, rawText.indexOf(endStr, pos));
 			}
+			function betweenNumberAnd(endStr) {
+				const endPos = rawText.indexOf(endStr);
+				if (endPos === -1) return null;
+
+				// Search backwards for the last number before endPos
+				const textBefore = rawText.substring(0, endPos);
+
+				// Regex to find the last number in textBefore
+				const match = textBefore.match(/(\d+)(?![\s\S]*\d)/);
+				if (!match) return null;
+
+				const startPos = textBefore.lastIndexOf(match[0]);
+
+				const contentStart = startPos + match[0].length;
+				return rawText.substring(contentStart, endPos);
+			}
+
 			function scrub(array) {
 				for (let x = 1; x < array.length; x++) {
 					temp = array[x].replaceAll("~", " ");
@@ -63,7 +80,13 @@ app.get("/url", (req, res, next) => {
 				}
 			}
 
-			examName = between("EXAM", "THE").replaceAll("~", " ");
+			examName = ((betweenNumberAnd("EXAM—KEY") + " EXAM").replaceAll("~", " ")).replaceAll("  ", " ");
+			while (examName.charAt(0) == " ") {
+						examName = examName.slice(1);
+			}
+			console.log(examName);
+
+
 			while (examName.charAt(0) == " ") {
 				examName = examName.slice(1);
 			}
@@ -77,34 +100,41 @@ app.get("/url", (req, res, next) => {
 			for (let i = 1; i <= 100; i++) {
 				begin = rawText.indexOf(" " + i + ". ");
 
+				// If this is the last question on the page...
 				if (
 					rawText.indexOf(" " + (i + 1) + ". ", begin) >
-					rawText.indexOf("Test ", begin)
+					rawText.indexOf(examName, begin)
 				) {
-					d = betweenS(" D.", "Test ", begin);
+					d = betweenS(" D.", "~  ~", begin);
+					console.log(i+" is the lest")
 				} else {
-					d = betweenS(" D.", i + 1 + ".", begin);
+					if (i != 100) {
+						d = betweenS(" D.", i + 1 + ".", begin);
+					} else {
+						d = betweenS("D.", "~  ~", begin);
+					}
 				}
 
-				if (i != 100) {
+				if (betweenS("A.", "B.", begin).includes("C.")) { // Edge case for 2x2 answer choices
 					data[i] = [
 						i,
-						between(" " + i + ". ", " A.", begin),
-						betweenS(" A.", " B.", begin),
-						betweenS(" B.", " C.", begin),
-						betweenS(" C.", " D.", begin),
-						d,
+						between(" " + i + ". ", " A.", begin), // Samples question
+						betweenS("A.", "C.", begin), // A
+						betweenS("B.", "D.", begin), // B
+						betweenS("C.", "B.", begin), // C
+						d, // D
 					];
 				} else {
 					data[i] = [
 						i,
-						between(" " + i + ". ", " A.", begin),
-						betweenS(" A.", " B.", begin),
-						betweenS(" B.", " C.", begin),
-						betweenS(" C.", " D.", begin),
-						betweenS(" D.", "~  ~", begin),
+						between(" " + i + ". ", " A.", begin), // Samples question
+						betweenS("A.", "B.", begin), // A
+						betweenS("B.", "C.", begin), // B
+						betweenS("C.", "D.", begin), // C
+						d, // D
 					];
 				}
+
 
 				begin = rawText.indexOf("EXAM—KEY");
 				begin = rawText.indexOf(" " + i + ".", begin);
