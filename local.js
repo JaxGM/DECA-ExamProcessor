@@ -1,8 +1,10 @@
+const fs = require('fs');
+
 // My Stuff
 const pdf = require("pdf-parse");
 const axios = require("axios");
 let output;
-let debugData = false; //This prints a full readout of the test/answers/etc. in array/CSV form.
+let debugData = true; //This saves a full readout of the test/answers/etc. in CSV form.
 
 let local = "https://cdn.prod.website-files.com/614e10e1200f163424ddb67c/616dbb5fb5bad031e90b6e63_HS_Business_Administration_Core_Sample_Exam_20.pdf"
 
@@ -25,7 +27,7 @@ function processExam(url) {
 				],
 			];
 
-			let begin, d, temp;
+			let begin, d, temp, lastAnsewer;
 
 			// console.log(rawText);
 			rawText = rawText.replace(/(\r\n|\n|\r)/gm, " ~ ");
@@ -127,9 +129,16 @@ function processExam(url) {
 				}
 
 
-				begin = rawText.indexOf("EXAM—KEY");
+				if (i==1) {
+					begin = rawText.indexOf("EXAM—KEY");
+				} else {
+					begin = lastAnsewer;
+				}
+
+
 				begin = rawText.indexOf(" " + i + ".", begin);
 				begin = rawText.indexOf(".", begin) + 1;
+				lastAnsewer = begin;
 
 				data[i].push(rawText.substring(begin, begin + 4));
 				if(rawText.substring(begin, begin + 4)==""){
@@ -144,7 +153,25 @@ function processExam(url) {
 			}
 
 			if (debugData){
-					console.log(data);
+					//console.log(data);
+					// write a readable CSV version of the 2D `data` array
+					function csvEscape(val) {
+						if (val === null || val === undefined) return "";
+						const s = String(val);
+						// Escape double quotes by doubling them
+						const escaped = s.replace(/"/g, '""');
+						if (escaped.includes(',') || escaped.includes('\n') || escaped.includes('\r') || escaped.includes('"')) {
+							return `"${escaped}"`;
+						}
+						return escaped;
+					}
+
+					const csvRows = data.map(row => row.map(csvEscape).join(',')).join('\n');
+					try {
+						fs.writeFileSync("debug.csv", csvRows, 'utf8');
+					} catch (e) {
+						console.error('Failed to write debug.csv', e);
+					}
 				}
 				
 			return data;

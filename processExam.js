@@ -35,7 +35,7 @@ app.get("/url", (req, res, next) => {
 				],
 			];
 
-			let begin, d, temp;
+			let begin, d, temp, lastAnsewer;
 
 			// console.log(rawText);
 			rawText = rawText.replace(/(\r\n|\n|\r)/gm, " ~ ");
@@ -137,9 +137,16 @@ app.get("/url", (req, res, next) => {
 				}
 
 
-				begin = rawText.indexOf("EXAM—KEY");
+				if (i==1) {
+					begin = rawText.indexOf("EXAM—KEY");
+				} else {
+					begin = lastAnsewer;
+				}
+
 				begin = rawText.indexOf(" " + i + ".", begin);
 				begin = rawText.indexOf(".", begin) + 1;
+				lastAnsewer = begin;
+
 
 				data[i].push(rawText.substring(begin, begin + 4));
 				if(rawText.substring(begin, begin + 4)==""){
