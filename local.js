@@ -1,22 +1,12 @@
-// API Config
-var express = require("express");
-var app = express();
-app.listen(3000, () => {
-	console.log("Server running on port 3000");
-});
-
-const cors = require("cors");
-app.use(cors());
-
 // My Stuff
 const pdf = require("pdf-parse");
 const axios = require("axios");
 let output;
 let debugData = false; //This prints a full readout of the test/answers/etc. in array/CSV form.
 
-// The API
-app.get("/url", (req, res, next) => {
-	function processExam(url) {
+let local = "https://cdn.prod.website-files.com/614e10e1200f163424ddb67c/616dbb5fb5bad031e90b6e63_HS_Business_Administration_Core_Sample_Exam_20.pdf"
+
+function processExam(url) {
 		//const url = "https://cdn.prod.website-files.com/635c470cc81318fc3e9c1e0e/67c1d65441573664321a854f_24-25_BA%20Core%20Exam.pdf"
 		function digitize(rawText) {
 			let examName;
@@ -179,15 +169,11 @@ app.get("/url", (req, res, next) => {
 			});
 	}
 
-	const url = req.query.link;
-	if (url == "awake") {
-		console.log("site loaded (awake recived)");
-		res.json("Hello wolrd!");
-	} else {
-		try {
-			processExam(url);
-		} catch (error) {
-			res.json("error");
-		}
-	}
-});
+
+
+
+
+
+
+
+console.log(processExam(local))
